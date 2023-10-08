@@ -1,5 +1,16 @@
 import React from 'react';
 
 export default function ReactView(): JSX.Element {
-  return <>1</>;
+  const styles = {
+    submitButton: {
+      backgroundColor: 'white',
+    },
+  };
+
+  return (
+    <div>
+      <input />
+      <button style={styles.submitButton}>Submit</button>
+    </div>
+  );
 }
