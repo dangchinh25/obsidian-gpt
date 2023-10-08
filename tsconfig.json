@@ -14,6 +14,17 @@
         "outDir": "dist",
         "baseUrl": "/",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    }
+        "emitDecoratorMetadata": true,
+        "lib": [
+            "dom",
+            "es6",
+            "scripthost",
+            "es2018"
+        ],
+        "jsx": "react",
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+    ]
 }

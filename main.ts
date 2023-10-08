@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { ExampleView, VIEW_TYPE_EXAMPLE } from './view';
+import { ExampleView, VIEW_TYPE_EXAMPLE } from './src/view';
 
 export default class ObsidianGPT extends Plugin {
     async onload (): Promise<void> {
@@ -19,7 +19,7 @@ export default class ObsidianGPT extends Plugin {
 
     }
 
-    async activateView () {
+    async activateView (): Promise<void> {
         this.app.workspace.detachLeavesOfType( VIEW_TYPE_EXAMPLE );
 
         await this.app.workspace.getRightLeaf( false ).setViewState( {
