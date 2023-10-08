@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useApp } from './context';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -23,9 +24,12 @@ export default function ReactView(): JSX.Element {
   };
 
   const [userInput, setUserInput] = useState<string>('');
+  const app = useApp();
+  const vault = app?.vault;
 
   const onClickSubmit = (e) => {
     console.log(userInput);
+    setUserInput('');
   };
 
   return (
@@ -38,6 +42,14 @@ export default function ReactView(): JSX.Element {
       <button style={styles.submitButton} onClick={onClickSubmit}>
         Submit
       </button>
+      {vault && (
+        <div>
+          <h1>{vault.getName()}</h1>
+          {vault.getMarkdownFiles().map((file) => (
+            <div>{file.name}</div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
