@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from './context';
 import { type Message } from './types';
-import UserMessage from './components/UserMessage';
+import { Message as MessageComponent } from './components/Message';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -24,6 +24,10 @@ export default function ReactView(): JSX.Element {
       borderRadius: '5px',
       border: '1px solid black',
     },
+    messagesContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   };
 
   const [userInput, setUserInput] = useState<string>('');
@@ -36,6 +40,7 @@ export default function ReactView(): JSX.Element {
       ...messages,
       {
         content: userInput,
+        role: 'user',
       },
     ]);
     setUserInput('');
@@ -63,9 +68,25 @@ export default function ReactView(): JSX.Element {
       <button style={styles.submitButton} onClick={onClickSubmit}>
         Submit
       </button>
-      {messages.map((message) => (
-        <UserMessage message={message} />
-      ))}
+      <div style={styles.messagesContainer}>
+        {messages.map((message) => {
+          if (message.role === 'user') {
+            return (
+              <MessageComponent
+                message={message}
+                style={{ width: '85%', alignSelf: 'start' }}
+              />
+            );
+          } else {
+            return (
+              <MessageComponent
+                message={message}
+                style={{ width: '85%', alignSelf: 'end' }}
+              />
+            );
+          }
+        })}
+      </div>
       {/* {vault && (
         <div>
           <h1>{vault.getName()}</h1>

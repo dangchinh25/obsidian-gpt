@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { type Message } from '../types';
 
-export default function UserMessage(props: { message: Message }) {
+export function Message(props: { message: Message; style?: CSSProperties }) {
   const styles = {
     userMessageContainer: {
-      width: '100%',
       backgroundColor: '#3b3b3b',
       padding: '5px',
       paddingLeft: '10px',
@@ -15,7 +14,7 @@ export default function UserMessage(props: { message: Message }) {
   };
 
   return (
-    <div style={styles.userMessageContainer}>
+    <div style={{ ...styles.userMessageContainer, ...props.style }}>
       <p>{props.message.content}</p>
     </div>
   );
