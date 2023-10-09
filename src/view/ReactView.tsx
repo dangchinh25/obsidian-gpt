@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from './context';
-
-type Message = {
-  content: string;
-};
+import { type Message } from './types';
+import UserMessage from './components/UserMessage';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -15,6 +13,7 @@ export default function ReactView(): JSX.Element {
     submitButton: {
       width: '75px',
       alignSelf: 'end',
+      marginBottom: '10px',
     },
     input: {
       width: '100%',
@@ -65,7 +64,7 @@ export default function ReactView(): JSX.Element {
         Submit
       </button>
       {messages.map((message) => (
-        <div>{message.content}</div>
+        <UserMessage message={message} />
       ))}
       {/* {vault && (
         <div>
