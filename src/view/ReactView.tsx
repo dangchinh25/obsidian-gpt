@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useApp } from './context';
 
+type Message = {
+  content: string;
+};
+
 export default function ReactView(): JSX.Element {
   const styles = {
     container: {
@@ -24,12 +28,29 @@ export default function ReactView(): JSX.Element {
   };
 
   const [userInput, setUserInput] = useState<string>('');
+  const [messages, setMessages] = useState<Message[]>([]);
   const app = useApp();
   const vault = app?.vault;
 
+  const submitMessage = () => {
+    setMessages([
+      ...messages,
+      {
+        content: userInput,
+      },
+    ]);
+    setUserInput('');
+  };
+
   const onClickSubmit = (e) => {
     console.log(userInput);
-    setUserInput('');
+    submitMessage();
+  };
+
+  const onInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      submitMessage();
+    }
   };
 
   return (
@@ -38,18 +59,22 @@ export default function ReactView(): JSX.Element {
         style={styles.input}
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
+        onKeyDown={onInputKeyDown}
       />
       <button style={styles.submitButton} onClick={onClickSubmit}>
         Submit
       </button>
-      {vault && (
+      {messages.map((message) => (
+        <div>{message.content}</div>
+      ))}
+      {/* {vault && (
         <div>
           <h1>{vault.getName()}</h1>
           {vault.getMarkdownFiles().map((file) => (
             <div>{file.name}</div>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
