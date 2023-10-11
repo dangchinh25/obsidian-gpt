@@ -3,7 +3,7 @@ import { useApp } from './context';
 import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
 import { getChatCompletion } from '../services/openai';
-import { Audio } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -29,6 +29,10 @@ export default function ReactView(): JSX.Element {
     messagesContainer: {
       display: 'flex',
       flexDirection: 'column',
+    },
+    loadingContainer: {
+      alignSelf: 'end',
+      marginRight: '10px',
     },
   };
 
@@ -114,14 +118,14 @@ export default function ReactView(): JSX.Element {
           }
         })}
         {isLoading && (
-          <Audio
-            height="80"
-            width="80"
+          <ThreeDots
+            height="50"
+            width="60"
             radius="9"
-            color="green"
-            ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
+            color="#3b3b3b"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={styles.loadingContainer}
+            visible={true}
           />
         )}
       </div>
