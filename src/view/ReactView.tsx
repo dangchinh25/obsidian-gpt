@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from './context';
-import { type Message } from './types';
+import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
+import { getChatCompletion } from '../services/openai';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -35,7 +36,29 @@ export default function ReactView(): JSX.Element {
   const app = useApp();
   const vault = app?.vault;
 
-  const submitMessage = () => {
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
+      console.log(messages);
+
+      (async () => {
+        const getChatCompletionResult = await getChatCompletion(messages);
+
+        console.log(getChatCompletionResult);
+
+        if (getChatCompletionResult.isSuccess()) {
+          setMessages([
+            ...messages,
+            {
+              content: getChatCompletionResult.value.content as string,
+              role: 'assistant',
+            },
+          ]);
+        }
+      })();
+    }
+  }, [messages]);
+
+  const submitMessage = async () => {
     setMessages([
       ...messages,
       {
@@ -43,17 +66,18 @@ export default function ReactView(): JSX.Element {
         role: 'user',
       },
     ]);
+
     setUserInput('');
   };
 
-  const onClickSubmit = (e) => {
+  const onClickSubmit = async (e) => {
     console.log(userInput);
-    submitMessage();
+    await submitMessage();
   };
 
-  const onInputKeyDown = (e) => {
+  const onInputKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      submitMessage();
+      await submitMessage();
     }
   };
 
