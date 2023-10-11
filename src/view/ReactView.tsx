@@ -3,6 +3,7 @@ import { useApp } from './context';
 import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
 import { getChatCompletion } from '../services/openai';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -29,10 +30,15 @@ export default function ReactView(): JSX.Element {
       display: 'flex',
       flexDirection: 'column',
     },
+    loadingContainer: {
+      alignSelf: 'end',
+      marginRight: '10px',
+    },
   };
 
   const [userInput, setUserInput] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const app = useApp();
   const vault = app?.vault;
 
@@ -46,6 +52,7 @@ export default function ReactView(): JSX.Element {
         console.log(getChatCompletionResult);
 
         if (getChatCompletionResult.isSuccess()) {
+          setIsLoading(false);
           setMessages([
             ...messages,
             {
@@ -66,7 +73,7 @@ export default function ReactView(): JSX.Element {
         role: 'user',
       },
     ]);
-
+    setIsLoading(true);
     setUserInput('');
   };
 
@@ -110,6 +117,17 @@ export default function ReactView(): JSX.Element {
             );
           }
         })}
+        {isLoading && (
+          <ThreeDots
+            height="50"
+            width="60"
+            radius="9"
+            color="#3b3b3b"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={styles.loadingContainer}
+            visible={true}
+          />
+        )}
       </div>
       {/* {vault && (
         <div>
