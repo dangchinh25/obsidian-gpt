@@ -3,6 +3,7 @@ import { useApp } from './context';
 import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
 import { getChatCompletion } from '../services/openai';
+import { Audio } from 'react-loader-spinner';
 
 export default function ReactView(): JSX.Element {
   const styles = {
@@ -33,6 +34,7 @@ export default function ReactView(): JSX.Element {
 
   const [userInput, setUserInput] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const app = useApp();
   const vault = app?.vault;
 
@@ -46,6 +48,7 @@ export default function ReactView(): JSX.Element {
         console.log(getChatCompletionResult);
 
         if (getChatCompletionResult.isSuccess()) {
+          setIsLoading(false);
           setMessages([
             ...messages,
             {
@@ -66,7 +69,7 @@ export default function ReactView(): JSX.Element {
         role: 'user',
       },
     ]);
-
+    setIsLoading(true);
     setUserInput('');
   };
 
@@ -110,6 +113,17 @@ export default function ReactView(): JSX.Element {
             );
           }
         })}
+        {isLoading && (
+          <Audio
+            height="80"
+            width="80"
+            radius="9"
+            color="green"
+            ariaLabel="loading"
+            wrapperStyle
+            wrapperClass
+          />
+        )}
       </div>
       {/* {vault && (
         <div>
