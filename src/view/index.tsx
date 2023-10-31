@@ -4,9 +4,9 @@ import React from 'react';
 import { Root, createRoot } from 'react-dom/client';
 import { AppContext } from './context';
 
-export const VIEW_TYPE_EXAMPLE = 'example-view';
+export const VIEW_TYPE = 'main-view';
 
-export class ExampleView extends ItemView {
+export class MainView extends ItemView {
   root: Root | null = null;
 
   constructor(leaf: WorkspaceLeaf) {
@@ -14,11 +14,11 @@ export class ExampleView extends ItemView {
   }
 
   getViewType(): string {
-    return VIEW_TYPE_EXAMPLE;
+    return VIEW_TYPE;
   }
 
   getDisplayText(): string {
-    return 'Example view';
+    return 'Main view';
   }
 
   async onOpen(): Promise<void> {

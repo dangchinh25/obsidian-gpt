@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { ExampleView, VIEW_TYPE_EXAMPLE } from './src/view';
+import { MainView, VIEW_TYPE } from './src/view';
 import {
     SettingsTab, type Settings, DEFAULT_SETTINGS
 } from './src/settings';
@@ -9,8 +9,8 @@ export default class ObsidianGPT extends Plugin {
 
     async onload (): Promise<void> {
         this.registerView(
-            VIEW_TYPE_EXAMPLE,
-            ( leaf ) => new ExampleView( leaf )
+            VIEW_TYPE,
+            ( leaf ) => new MainView( leaf )
         );
 
         this.addRibbonIcon( 'message-circle', 'Obsidian GPT', () => {
@@ -29,15 +29,15 @@ export default class ObsidianGPT extends Plugin {
     }
 
     async activateView (): Promise<void> {
-        this.app.workspace.detachLeavesOfType( VIEW_TYPE_EXAMPLE );
+        this.app.workspace.detachLeavesOfType( VIEW_TYPE );
 
         await this.app.workspace.getRightLeaf( false ).setViewState( {
-            type: VIEW_TYPE_EXAMPLE,
+            type: VIEW_TYPE,
             active: true
         } );
 
         this.app.workspace.revealLeaf(
-            this.app.workspace.getLeavesOfType( VIEW_TYPE_EXAMPLE )[ 0 ]
+            this.app.workspace.getLeavesOfType( VIEW_TYPE )[ 0 ]
         );
     }
 
