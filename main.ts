@@ -3,9 +3,12 @@ import { MainView, VIEW_TYPE } from './src/view';
 import {
     SettingsTab, type Settings, DEFAULT_SETTINGS
 } from './src/settings';
+import OpenAI from 'openai';
+import { createOpenAIClient } from './src/services/openai';
 
 export default class ObsidianGPT extends Plugin {
     settings: Settings | undefined;
+    openAIClient: OpenAI | null = null;
     static instance: ObsidianGPT | null = null;
 
     async onload (): Promise<void> {
@@ -25,6 +28,10 @@ export default class ObsidianGPT extends Plugin {
         await this.loadSettings();
 
         this.addSettingTab( new SettingsTab( this.app, this ) );
+
+        if ( this.settings?.openaiKey ) {
+            this.openAIClient = createOpenAIClient( this.settings.openaiKey );
+        }
     }
 
     onunload (): void {

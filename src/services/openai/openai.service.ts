@@ -1,10 +1,10 @@
 import OpenAi from 'openai';
-import { openAIClient } from './openai.client';
 import {
     Either,  error, success
 } from '../../types';
 
 export const getChatCompletion = async (
+    openAIClient: OpenAi,
     messages: OpenAi.Chat.ChatCompletionMessageParam[]
 ): Promise<Either<Error, OpenAi.Chat.ChatCompletionMessage>> => {
     let responseMessage: OpenAi.Chat.ChatCompletionMessage = {

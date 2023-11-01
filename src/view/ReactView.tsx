@@ -7,8 +7,6 @@ import { ThreeDots } from 'react-loader-spinner';
 import ObsidianGPTPlugin from '../../main';
 
 export default function ReactView(): JSX.Element {
-  const plugin = ObsidianGPTPlugin.instance;
-
   const styles = {
     container: {
       display: 'flex',
@@ -45,27 +43,31 @@ export default function ReactView(): JSX.Element {
   const app = useApp();
   const vault = app?.vault;
 
-  useEffect(() => {
-    console.log(app);
-    console.log(plugin);
+  const plugin = ObsidianGPTPlugin.instance;
 
+  useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
       console.log(messages);
 
       (async () => {
-        const getChatCompletionResult = await getChatCompletion(messages);
+        if (plugin?.openAIClient) {
+          const getChatCompletionResult = await getChatCompletion(
+            plugin?.openAIClient,
+            messages
+          );
 
-        console.log(getChatCompletionResult);
+          console.log(getChatCompletionResult);
 
-        if (getChatCompletionResult.isSuccess()) {
-          setIsLoading(false);
-          setMessages([
-            ...messages,
-            {
-              content: getChatCompletionResult.value.content as string,
-              role: 'assistant',
-            },
-          ]);
+          if (getChatCompletionResult.isSuccess()) {
+            setIsLoading(false);
+            setMessages([
+              ...messages,
+              {
+                content: getChatCompletionResult.value.content as string,
+                role: 'assistant',
+              },
+            ]);
+          }
         }
       })();
     }
