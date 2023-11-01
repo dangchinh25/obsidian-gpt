@@ -25,6 +25,19 @@ jobs:
           npm install
           npm run build
 
+      - name: Create Zip Of Build
+        id: create_zip
+        run: |
+          mkdir ${{ env.PLUGIN_NAME }}
+          cp main.js manifest.json ${{ env.PLUGIN_NAME }}
+          zip -r ${{ env.PLUGIN_NAME }}.zip ${{ env.PLUGIN_NAME }}
+          ls
+
+      - name: Create Tag Variable
+        id: create_tag
+        run: |
+          echo "::set-output name=tag_name::$(git tag --sort version:refname | tail -n 1)"
+     
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
