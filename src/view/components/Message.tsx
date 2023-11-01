@@ -11,11 +11,14 @@ export function Message(props: { message: Message; style?: CSSProperties }) {
       borderRadius: '5px',
       border: '1px solid black',
     },
+    userMessage: {
+      'white-space': 'pre-wrap',
+    },
   };
 
   return (
     <div style={{ ...styles.userMessageContainer, ...props.style }}>
-      <p>{props.message.content}</p>
+      <p style={styles.userMessage}>{props.message.content}</p>
     </div>
   );
 }
