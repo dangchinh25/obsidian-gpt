@@ -4,8 +4,11 @@ import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
 import { getChatCompletion } from '../services/openai';
 import { ThreeDots } from 'react-loader-spinner';
+import ObsidianGPTPlugin from '../../main';
 
 export default function ReactView(): JSX.Element {
+  const plugin = ObsidianGPTPlugin.instance;
+
   const styles = {
     container: {
       display: 'flex',
@@ -44,6 +47,7 @@ export default function ReactView(): JSX.Element {
 
   useEffect(() => {
     console.log(app);
+    console.log(plugin);
 
     if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
       console.log(messages);

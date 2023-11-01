@@ -6,8 +6,11 @@ import {
 
 export default class ObsidianGPT extends Plugin {
     settings: Settings | undefined;
+    static instance: ObsidianGPT | null = null;
 
     async onload (): Promise<void> {
+        ObsidianGPT.instance = this;
+
         this.registerView(
             VIEW_TYPE,
             ( leaf ) => new MainView( leaf )
@@ -25,7 +28,7 @@ export default class ObsidianGPT extends Plugin {
     }
 
     onunload (): void {
-
+        ObsidianGPT.instance = null;
     }
 
     async activateView (): Promise<void> {
