@@ -29,6 +29,17 @@ export class SettingsTab extends PluginSettingTab {
                             this.plugin.settings!.openaiKey = value;
                             await this.plugin.saveSettings();
                         } ) );
+
+            new Setting( containerEl )
+                .setName( 'OpenAI API Model' )
+                .setDesc( 'OpenAI API Model' )
+                .addText( ( text ) =>
+                    text
+                        .setValue( this.plugin.settings!.openaiModel )
+                        .onChange( async ( value ) => {
+                                    this.plugin.settings!.openaiModel = value;
+                                    await this.plugin.saveSettings();
+                        } ) );
         }
     }
 }
