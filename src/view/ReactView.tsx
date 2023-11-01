@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from './context';
 import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
-import { getChatCompletion } from '../services/openai';
 import { ThreeDots } from 'react-loader-spinner';
 import ObsidianGPTPlugin from '../../main';
 
@@ -51,10 +50,8 @@ export default function ReactView(): JSX.Element {
 
       (async () => {
         if (plugin?.openAIClient) {
-          const getChatCompletionResult = await getChatCompletion(
-            plugin?.openAIClient,
-            messages
-          );
+          const getChatCompletionResult =
+            await plugin.openAIClient.getChatCompletion(messages);
 
           console.log(getChatCompletionResult);
 
