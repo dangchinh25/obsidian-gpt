@@ -9,7 +9,7 @@ export default function ReactView(): JSX.Element {
   const styles = {
     container: {
       display: 'flex',
-      flexDirection: 'column',
+      ['flex-direction']: 'column',
       margin: '5px',
     },
     submitButton: {
@@ -28,7 +28,7 @@ export default function ReactView(): JSX.Element {
     },
     messagesContainer: {
       display: 'flex',
-      flexDirection: 'column',
+      ['flex-direction']: 'column',
     },
     loadingContainer: {
       alignSelf: 'end',
@@ -43,6 +43,8 @@ export default function ReactView(): JSX.Element {
   const vault = app?.vault;
 
   useEffect(() => {
+    console.log(app);
+
     if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
       console.log(messages);
 

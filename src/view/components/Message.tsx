@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { type Message } from '../types';
+import { type Message } from '../../types';
 
 export function Message(props: { message: Message; style?: CSSProperties }) {
   const styles = {
