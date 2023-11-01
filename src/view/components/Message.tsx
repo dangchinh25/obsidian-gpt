@@ -12,7 +12,7 @@ export function Message(props: { message: Message; style?: CSSProperties }) {
       border: '1px solid black',
     },
     userMessage: {
-      'white-space': 'pre-wrap',
+      whiteSpace: 'pre-wrap' as any,
     },
   };
 
