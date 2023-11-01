@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     App, PluginSettingTab, Setting
 } from 'obsidian';
@@ -18,14 +19,14 @@ export class SettingsTab extends PluginSettingTab {
 
         if ( this.plugin.settings ) {
             new Setting( containerEl )
-                .setName( 'Date format' )
-                .setDesc( 'Default date format' )
+                .setName( 'OpenAI API Key' )
+                .setDesc( 'Your own OpenAI API Key' )
                 .addText( ( text ) =>
                     text
-                        .setPlaceholder( 'MMMM dd, yyyy' )
-                        .setValue( this.plugin.settings!.dateFormat )
+                        .setPlaceholder( '<YOUR_OPENAI_API_KEY>' )
+                        .setValue( this.plugin.settings!.openaiKey )
                         .onChange( async ( value ) => {
-                            this.plugin.settings!.dateFormat = value;
+                            this.plugin.settings!.openaiKey = value;
                             await this.plugin.saveSettings();
                         } ) );
         }

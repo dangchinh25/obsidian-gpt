@@ -4,12 +4,13 @@ import { type Message } from '../types';
 import { Message as MessageComponent } from './components/Message';
 import { getChatCompletion } from '../services/openai';
 import { ThreeDots } from 'react-loader-spinner';
+import ObsidianGPTPlugin from '../../main';
 
 export default function ReactView(): JSX.Element {
   const styles = {
     container: {
       display: 'flex',
-      flexDirection: 'column',
+      ['flex-direction']: 'column',
       margin: '5px',
     },
     submitButton: {
@@ -28,7 +29,7 @@ export default function ReactView(): JSX.Element {
     },
     messagesContainer: {
       display: 'flex',
-      flexDirection: 'column',
+      ['flex-direction']: 'column',
     },
     loadingContainer: {
       alignSelf: 'end',
@@ -42,24 +43,31 @@ export default function ReactView(): JSX.Element {
   const app = useApp();
   const vault = app?.vault;
 
+  const plugin = ObsidianGPTPlugin.instance;
+
   useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
       console.log(messages);
 
       (async () => {
-        const getChatCompletionResult = await getChatCompletion(messages);
+        if (plugin?.openAIClient) {
+          const getChatCompletionResult = await getChatCompletion(
+            plugin?.openAIClient,
+            messages
+          );
 
-        console.log(getChatCompletionResult);
+          console.log(getChatCompletionResult);
 
-        if (getChatCompletionResult.isSuccess()) {
-          setIsLoading(false);
-          setMessages([
-            ...messages,
-            {
-              content: getChatCompletionResult.value.content as string,
-              role: 'assistant',
-            },
-          ]);
+          if (getChatCompletionResult.isSuccess()) {
+            setIsLoading(false);
+            setMessages([
+              ...messages,
+              {
+                content: getChatCompletionResult.value.content as string,
+                role: 'assistant',
+              },
+            ]);
+          }
         }
       })();
     }

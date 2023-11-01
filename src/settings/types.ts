@@ -1,5 +1,5 @@
 export type Settings = {
-    dateFormat: string;
+    openaiKey: string;
 };
 
-export const DEFAULT_SETTINGS: Partial<Settings> = { dateFormat: 'YYYY-MM-DD' };
+export const DEFAULT_SETTINGS: Partial<Settings> = { openaiKey: '<YOUR_OPENAI_API_KEY>' };
