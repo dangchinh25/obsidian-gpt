@@ -3,9 +3,8 @@
     "name": "Obsidian GPT",
     "version": "0.1.5",
     "minAppVersion": "0.15.0",
-    "description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
-    "author": "Obsidian",
+    "description": "This plugin lets the user Q&A with their own notes in the Vault with the power of OpenAI.",
+    "author": "Chinh Le",
     "authorUrl": "https://obsidian.md",
-    "fundingUrl": "https://obsidian.md/pricing",
     "isDesktopOnly": false
 }
